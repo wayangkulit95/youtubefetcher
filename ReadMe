@@ -1,0 +1,37 @@
+installation Guide
+
+
+
+
+Changelog
+
+[released]
+Added Stream Name Feature: Users can now input a name for the stream when fetching URLs.
+
+Database Update: The streams table in the database now includes a name column to store the stream name.
+
+HLS Stream Route: Updated the route for accessing HLS streams to support the format /hls/name_of_your_stream.m3u8.
+
+User Interface:
+
+Added an input field for entering the stream name on the main panel.
+
+Provided a direct link to access the HLS stream in the format /hls/name_of_your_stream.m3u8 after fetching URLs.
+
+Enhanced Error Handling: Improved error responses for unauthorized access and URL fetching failures.
+
+[1.0.0] - Initial Release
+
+Basic functionality for fetching DASH and HLS URLs from YouTube live streams.
+
+User authentication with a simple login panel.
+
+SQLite database integration to store streams and user data.
+
+Static front-end page for user interaction.
+
+Usage Instructions
+
+To access the application, navigate to http://localhost:2000/login.
+After logging in, use the main panel to input YouTube URLs and stream names.
+Access the stream using the URL format: http://localhost:2000/hls/name_of_your_stream.m3u8.
