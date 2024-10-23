@@ -23,18 +23,17 @@ sudo apt install -y nodejs
 if command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
     echo "Node.js and npm installed successfully."
 else
-    echo "Node.js installation failed. Exiting."
-    exit 1
+    echo "Node.js installation failed."
 fi
 
 # Create project directory
 echo "Creating project directory..."
-mkdir $PROJECT_DIR
-cd $PROJECT_DIR
+mkdir -p "$PROJECT_DIR"  # Use -p to avoid errors if the directory already exists
+cd "$PROJECT_DIR" || { echo "Failed to change directory to $PROJECT_DIR"; }
 
 # Create app.js
 echo "Downloading app.js..."
-curl -O https://raw.githubusercontent.com/wayangkulit95/usermanager/main/app.js
+curl -O https://raw.githubusercontent.com/wayangkulit95/usermanager/main/app.js || { echo "Failed to download app.js"; }
 
 # Create package.json
 echo "Creating package.json..."
@@ -66,15 +65,15 @@ EOF
 
 # Install necessary Node.js packages
 echo "Installing necessary Node.js packages..."
-npm install
+npm install || { echo "Failed to install Node.js packages"; }
 
 # Install PM2 for process management
 echo "Installing PM2..."
-sudo npm install -g pm2
+sudo npm install -g pm2 || { echo "Failed to install PM2"; }
 
 # Start the application with PM2
 echo "Starting the application with PM2..."
-pm2 start $APP_FILE --name yl
+pm2 start "$APP_FILE" --name yl || { echo "Failed to start the application"; }
 pm2 save
 pm2 startup
 
