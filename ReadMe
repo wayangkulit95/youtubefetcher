@@ -2,6 +2,8 @@ installation Guide
 
 bash <(curl -s https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/refs/heads/main/Install.sh)
 
+npm install express body-parser express-session node-fetch sqlite3 nodemon
+
 
 Changelog
 
