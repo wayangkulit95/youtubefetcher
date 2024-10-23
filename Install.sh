@@ -15,11 +15,19 @@ sudo apt install -y curl git build-essential
 
 # Install Node.js
 echo "Installing Node.js..."
-curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | sudo -E bash - || { echo "Failed to run Node.js setup script"; }
 sudo apt install -y nodejs
 
-# Ensure npm is available
-if ! command -v npm >/dev/null 2>&1; then
+# Check Node.js and npm installation
+if command -v node >/dev/null 2>&1; then
+    echo "Node.js installed successfully: $(node -v)"
+else
+    echo "Node.js installation failed. Please check the installation."
+fi
+
+if command -v npm >/dev/null 2>&1; then
+    echo "npm installed successfully: $(npm -v)"
+else
     echo "npm installation failed. Please check Node.js installation."
 fi
 
@@ -55,7 +63,7 @@ cat << 'EOF' > package.json
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
-  "author": "Your Name",
+  "author": "MTS",
   "license": "MIT"
 }
 EOF
