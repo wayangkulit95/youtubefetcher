@@ -1,0 +1,29 @@
+installation Guide
+
+bash <(curl -s https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/refs/heads/main/Install.sh)
+
+
+Step 3: Install Dependencies
+In your project directory, run the following command to install the necessary packages:
+
+bash
+Copy code
+npm install express node-fetch body-parser
+Step 4: Start the Server
+Now you can start your server:
+
+bash
+Copy code
+node app.js
+Step 5: Access Your Web Panel
+Open your web browser and go to http://<your-vps-ip>:3000. You should see your web panel where you can add YouTube live URLs.
+
+Step 6: Streaming URLs
+To access the streaming URLs, you can use:
+
+http://<your-vps-ip>:3000/stream/<id>/master.mpd
+http://<your-vps-ip>:3000/stream/<id>/master.m3u8
+Replace <id> with the index of the URL you added.
+
+Note
+Make sure to secure your VPS and consider using a process manager like PM2 to keep your app running in the background. You may also want to implement validation for the URLs you accept and add error handling to enhance the robustness of your application.
