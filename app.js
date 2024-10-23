@@ -1,8 +1,12 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-const session = require('express-session');
+import express from 'express';
+import fetch from 'node-fetch';
+import sqlite3 from 'sqlite3';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import path from 'path';
+
+const app = express();
+const port = 2000; // Port for the application
 
 // Initialize the database
 const db = new sqlite3.Database('./streams.db', (err) => {
@@ -22,9 +26,6 @@ const db = new sqlite3.Database('./streams.db', (err) => {
         )`);
     }
 });
-
-const app = express();
-const port = 2000; // Port for the application
 
 // Middleware
 app.use(bodyParser.json());
@@ -222,7 +223,6 @@ app.get('/', (req, res) => {
             }
         });
     </script>
-
     </body>
     </html>
     `);
@@ -230,5 +230,5 @@ app.get('/', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
