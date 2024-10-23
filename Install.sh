@@ -32,14 +32,41 @@ echo "Creating project directory..."
 mkdir $PROJECT_DIR
 cd $PROJECT_DIR
 
-# Download app.js
+# Create app.js
 echo "Downloading app.js..."
-curl -O https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/main/app.js
+curl -O https://raw.githubusercontent.com/wayangkulit95/usermanager/main/app.js
+
+# Create package.json
+echo "Creating package.json..."
+cat << 'EOF' > package.json
+{
+  "name": "yl",
+  "version": "1.0.0",
+  "description": "YouTube Live Stream URL Fetcher",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "node-fetch": "^2.6.7",
+    "sqlite3": "^5.0.2",
+    "body-parser": "^1.19.0",
+    "express-session": "^1.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
+EOF
 
 # Install necessary Node.js packages
 echo "Installing necessary Node.js packages..."
-npm init -y
-npm install express node-fetch sqlite3 body-parser express-session
+npm install
 
 # Install PM2 for process management
 echo "Installing PM2..."
