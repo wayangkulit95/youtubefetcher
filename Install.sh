@@ -1,22 +1,12 @@
 #!/bin/bash
 
-# Variables
-PROJECT_DIR="yl"
-APP_FILE="app.js"
-NODE_VERSION="16.x"
+# Update the system
+echo "Updating system..."
+sudo apt update && sudo apt upgrade -y
 
-# Update and install required packages
-echo "Updating package index..."
-sudo apt update -y
-
-# Install required packages for Debian 11
-echo "Installing required packages..."
-sudo apt install -y curl git build-essential
-
-# Install Node.js
-echo "Installing Node.js..."
-curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | sudo -E bash - || { echo "Failed to run Node.js setup script"; }
-sudo apt install -y nodejs
+# Install Node.js and npm
+echo "Installing Node.js and npm..."
+sudo apt install nodejs npm -y
 
 # Check Node.js and npm installation
 if command -v node >/dev/null 2>&1; then
@@ -31,10 +21,10 @@ else
     echo "npm installation failed. Please check Node.js installation."
 fi
 
-# Create project directory
-echo "Creating project directory..."
-mkdir -p "$PROJECT_DIR"
-cd "$PROJECT_DIR" || { echo "Failed to change directory to $PROJECT_DIR"; }
+# Navigate to your app's directory
+APP_DIR="/root/ytl"  # Change to your desired application directory
+mkdir -p "$APP_DIR"           # Create the app directory if it doesn't exist
+cd "$APP_DIR"
 
 # Download app.js
 echo "Downloading app.js..."
@@ -67,6 +57,33 @@ cat << 'EOF' > package.json
   "license": "MIT"
 }
 EOF
+# Install SQLite3
+echo "Installing SQLite3..."
+sudo apt install sqlite3 -y
+
+# Install Node-Fetch
+echo "Installing node-fetch..."
+sudo apt install node-fetch -y\
+
+# Install Express
+echo "Installing express..."
+sudo apt install express -y
+
+# Install Body-Parser
+echo "Installing body-parser..."
+sudo apt install body-parser -y
+
+# Install express-session
+echo "Installing express-session..."
+sudo apt install express-session -y
+
+# Install PM2 to run the app 24/7
+echo "Installing PM2..."
+sudo npm install pm2 -g
+
+# Set the system time zone to Malaysia time
+echo "Setting the time zone to Malaysia (Asia/Kuala_Lumpur)..."
+sudo timedatectl set-timezone Asia/Kuala_Lumpur
 
 # Install necessary Node.js packages
 echo "Installing necessary Node.js packages..."
