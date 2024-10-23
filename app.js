@@ -19,7 +19,24 @@ const db = new sqlite3.Database('./streams.db', (err) => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL
-        )`);
+        )`, (err) => {
+            if (!err) {
+                // Insert default admin user if it doesn't exist
+                const username = 'admin';
+                const password = 'password'; // Change this to a secure password
+                db.get(`SELECT * FROM users WHERE username = ?`, [username], (err, row) => {
+                    if (!row) {
+                        db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, [username, password], (err) => {
+                            if (err) {
+                                console.error('Error inserting default user:', err.message);
+                            } else {
+                                console.log('Default admin user created.');
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 });
 
