@@ -2,7 +2,6 @@
 
 # Variables
 PROJECT_DIR="yl"
-DB_FILE="streams.db"
 APP_FILE="app.js"
 NODE_VERSION="16.x"
 
@@ -22,17 +21,16 @@ sudo apt install -y nodejs
 # Ensure npm is available
 if ! command -v npm >/dev/null 2>&1; then
     echo "npm installation failed. Please check Node.js installation."
-    exit 1
 fi
 
 # Create project directory
 echo "Creating project directory..."
 mkdir -p "$PROJECT_DIR"
-cd "$PROJECT_DIR" || { echo "Failed to change directory to $PROJECT_DIR"; exit 1; }
+cd "$PROJECT_DIR" || { echo "Failed to change directory to $PROJECT_DIR"; }
 
-# Create app.js
+# Download app.js
 echo "Downloading app.js..."
-curl -O https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/main/app.js || { echo "Failed to download app.js"; exit 1; }
+curl -O https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/main/app.js || { echo "Failed to download app.js"; }
 
 # Create package.json
 echo "Creating package.json..."
@@ -64,15 +62,15 @@ EOF
 
 # Install necessary Node.js packages
 echo "Installing necessary Node.js packages..."
-npm install || { echo "Failed to install Node.js packages"; exit 1; }
+npm install || { echo "Failed to install Node.js packages"; }
 
 # Install PM2 for process management
 echo "Installing PM2..."
-sudo npm install -g pm2 || { echo "Failed to install PM2"; exit 1; }
+sudo npm install -g pm2 || { echo "Failed to install PM2"; }
 
 # Start the application with PM2
 echo "Starting the application with PM2..."
-pm2 start "$APP_FILE" --name yl || { echo "Failed to start the application"; exit 1; }
+pm2 start "$APP_FILE" --name yl || { echo "Failed to start the application"; }
 pm2 save
 pm2 startup
 
