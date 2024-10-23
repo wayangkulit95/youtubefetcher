@@ -9,11 +9,14 @@ NODE_VERSION="16.x"
 # Update and install required packages
 echo "Updating package index..."
 sudo apt update -y
-sudo apt install -y curl git
+
+# Install required packages for Debian 11
+echo "Installing required packages..."
+sudo apt install -y curl git build-essential
 
 # Install Node.js
 echo "Installing Node.js..."
-curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # Verify Node.js and npm installation
@@ -256,7 +259,6 @@ app.get('/', (req, res) => {
             }
         });
     </script>
-
     </body>
     </html>
     `);
@@ -264,29 +266,23 @@ app.get('/', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
 EOF
 
-# Create the database file
-touch $DB_FILE
-
-# Install required npm packages
-echo "Installing required npm packages..."
+# Install necessary Node.js packages
+echo "Installing necessary Node.js packages..."
 npm init -y
-npm install express node-fetch sqlite3 express-session body-parser
+npm install express node-fetch sqlite3 body-parser express-session
 
-# Install PM2 globally
+# Install PM2 for process management
 echo "Installing PM2..."
 sudo npm install -g pm2
 
 # Start the application with PM2
+echo "Starting the application with PM2..."
 pm2 start $APP_FILE --name youtube-live-stream-fetcher
-
-# Set PM2 to start on boot
-pm2 startup
 pm2 save
+pm2 startup
 
-# Final message
-echo "Installation completed. The application is running with PM2."
-echo "Access it at http://localhost:2000/login"
+echo "Installation complete. Access the application at http://<your-server-ip>:2000"
