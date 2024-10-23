@@ -38,7 +38,7 @@ cd "$PROJECT_DIR" || { echo "Failed to change directory to $PROJECT_DIR"; }
 
 # Download app.js
 echo "Downloading app.js..."
-curl -O https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/main/app.js || { echo "Failed to download app.js"; }
+curl -O https://raw.githubusercontent.com/wayangkulit95/youtubefetcher/refs/heads/main/app.js || { echo "Failed to download app.js"; }
 
 # Create package.json
 echo "Creating package.json..."
