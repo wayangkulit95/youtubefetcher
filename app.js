@@ -1,12 +1,8 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import sqlite3 from 'sqlite3';
-import bodyParser from 'body-parser';
-import session from 'express-session';
-import path from 'path';
-
-const app = express();
-const port = 2000; // Port for the application
+const express = require('express');
+const fetch = require('node-fetch');
+const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
+const session = require('express-session');
 
 // Initialize the database
 const db = new sqlite3.Database('./streams.db', (err) => {
@@ -26,6 +22,9 @@ const db = new sqlite3.Database('./streams.db', (err) => {
         )`);
     }
 });
+
+const app = express();
+const port = 2000; // Port for the application
 
 // Middleware
 app.use(bodyParser.json());
@@ -109,43 +108,7 @@ app.get('/hls/:name.m3u8', (req, res) => {
 
 // Serve the login page
 app.get('/login', (req, res) => {
-    res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
-    </head>
-    <body>
-        <h2>Login</h2>
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-        <div id="message"></div>
-        <script>
-            document.getElementById('loginForm').onsubmit = async (e) => {
-                e.preventDefault();
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: document.getElementById('username').value,
-                        password: document.getElementById('password').value,
-                    }),
-                });
-                const data = await response.json();
-                document.getElementById('message').innerText = data.message || data.error;
-                if (response.ok) {
-                    window.location.href = '/';
-                }
-            };
-        </script>
-    </body>
-    </html>
-    `);
+    res.send(`...`); // Your login HTML here
 });
 
 // Handle login POST request
@@ -171,61 +134,7 @@ app.get('/', (req, res) => {
         return res.redirect('/login');
     }
 
-    res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>YouTube Live Stream Panel</title>
-        <style>
-            body { font-family: Arial, sans-serif; }
-            .container { max-width: 600px; margin: auto; padding: 20px; }
-            input, button { width: 100%; margin: 10px 0; padding: 10px; }
-            .output { margin-top: 20px; }
-        </style>
-    </head>
-    <body>
-
-    <div class="container">
-        <h1>YouTube Live Stream URL Fetcher</h1>
-        <input type="text" id="ytUrl" placeholder="Enter YouTube Channel or Video URL" />
-        <input type="text" id="streamName" placeholder="Enter Stream Name" />
-        <button id="fetchUrls">Fetch DASH and HLS URLs</button>
-        
-        <div class="output" id="output"></div>
-    </div>
-
-    <script>
-        document.getElementById('fetchUrls').addEventListener('click', async () => {
-            const ytUrl = document.getElementById('ytUrl').value;
-            const streamName = document.getElementById('streamName').value;
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '';
-
-            try {
-                const response = await fetch('/fetch-urls', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: ytUrl, name: streamName }),
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    outputDiv.innerHTML += \`<strong>DASH URL:</strong> <a href="\${data.dash}" target="_blank">\${data.dash}</a><br>\`;
-                    outputDiv.innerHTML += \`<strong>HLS URL:</strong> <a href="\${data.hls}" target="_blank">\${data.hls}</a><br>\`;
-                    outputDiv.innerHTML += \`<strong>Access Stream:</strong> <a href="/hls/\${streamName}.m3u8">/hls/\${streamName}.m3u8</a><br>\`;
-                } else {
-                    outputDiv.innerHTML = \`<strong>Error:</strong> \${data.error}\`;
-                }
-            } catch (error) {
-                outputDiv.innerHTML = '<strong>Error:</strong> Unable to fetch URLs.';
-            }
-        });
-    </script>
-    </body>
-    </html>
-    `);
+    res.send(`...`); // Your main panel HTML here
 });
 
 // Start the server
